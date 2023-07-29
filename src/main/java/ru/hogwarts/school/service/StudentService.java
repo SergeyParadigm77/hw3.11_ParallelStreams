@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class StudentService {
@@ -73,4 +74,23 @@ public class StudentService {
         logger.info("getFiveStudentsOrderedById method was invoked");
         return studentRepository.getFiveStudentsOrderedById();
     }
+    public Collection<String> findAllWithNameStartsWithLetterA() {
+        logger.info("findAllWithNameStartsWithLetterA method was invoked");
+        return studentRepository.findAll()
+                .stream()
+                .map(Student::getName)
+                .map(String::toUpperCase)
+                .filter(it -> it.charAt(0) == 'A')
+                .sorted()
+                .collect(Collectors.toList());
+    }
+    public float averageAgeViaStreams() {
+        logger.info("averageAgeOfAll method was invoked");
+        return (float) studentRepository.findAll()
+                .stream()
+                .mapToInt(Student::getAge)
+                .average()
+                .orElse(0.0);
+    }
+
     }
