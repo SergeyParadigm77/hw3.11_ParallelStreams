@@ -107,7 +107,6 @@ public class StudentService {
             printStudentName(students.get(4));
             printStudentName(students.get(5));
         }).start();
-
     }
     private void printStudentName(Student student){
         try {
@@ -133,11 +132,12 @@ public class StudentService {
         }).start();
 
     }
+    Object object = new Object();
     private void printStudentNameSynchronized(Student student){
         //денег хватает?
         //если хватает, то уменьшаем баланс
         //если не хватает, то ничего не делаем
-        synchronized(this) {
+        synchronized(object) {
         printStudentName(student);
     }
     }

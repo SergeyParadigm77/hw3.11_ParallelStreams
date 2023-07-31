@@ -89,5 +89,4 @@ public class StudentController {
     public void synchronizedThreads() {
         studentService.synchronizedThreads();
     }
-
 }
