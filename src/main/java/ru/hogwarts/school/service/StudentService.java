@@ -3,6 +3,7 @@ package ru.hogwarts.school.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
@@ -92,5 +93,52 @@ public class StudentService {
                 .average()
                 .orElse(0.0);
     }
+    public void threads() {
+        List<Student> students = studentRepository.findAll();
+        printStudentName(students.get(0));
+        printStudentName(students.get(1));
 
+        new Thread(()-> {
+            printStudentName(students.get(2));
+            printStudentName(students.get(3));
+        }).start();
+
+        new Thread(()-> {
+            printStudentName(students.get(4));
+            printStudentName(students.get(5));
+        }).start();
+    }
+    private void printStudentName(Student student){
+        try {
+            Thread.sleep(1000);
+        } catch(InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(student.getName());
+    }
+    public void synchronizedThreads() {
+        List<Student> students = studentRepository.findAll();
+        printStudentNameSynchronized(students.get(0));
+        printStudentNameSynchronized(students.get(1));
+
+        new Thread(()-> {
+            printStudentNameSynchronized(students.get(2));
+            printStudentNameSynchronized(students.get(3));
+        }).start();
+
+        new Thread(()-> {
+            printStudentNameSynchronized(students.get(4));
+            printStudentNameSynchronized(students.get(5));
+        }).start();
+
+    }
+    Object object = new Object();
+    private void printStudentNameSynchronized(Student student){
+        //денег хватает?
+        //если хватает, то уменьшаем баланс
+        //если не хватает, то ничего не делаем
+        synchronized(object) {
+        printStudentName(student);
+    }
+    }
     }

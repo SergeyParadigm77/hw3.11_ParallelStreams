@@ -81,5 +81,12 @@ public class StudentController {
     public float averageAgeViaStreams() {
         return studentService.averageAgeViaStreams();
     }
-
+    @GetMapping("/threads")
+    public void threads() {
+        studentService.threads();
+    }
+    @GetMapping("/synchronized-threads")
+    public void synchronizedThreads() {
+        studentService.synchronizedThreads();
+    }
 }
