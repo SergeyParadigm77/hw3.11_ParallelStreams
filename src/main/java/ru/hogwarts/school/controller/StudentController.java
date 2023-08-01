@@ -10,7 +10,6 @@ import ru.hogwarts.school.service.StudentService;
 import java.util.Collection;
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/students")
 public class StudentController {
